@@ -1,0 +1,13 @@
+{
+  "config": [
+    {
+      "url": "10.0.205.199",
+      "port": 3306,
+      "user": "root",
+      "password": "mysqlAdmin123",
+      "max_pool_size": 20,
+      "max_idle_time": 1800
+    }
+  ],
+  "configDb": "demo_db"
+}
