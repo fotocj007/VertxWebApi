@@ -28,7 +28,7 @@ public class MySQLUtil {
         this.poolSize = poolSize;
         this.dataConfig = dataConfig;
 
-//        initPool();
+        initPool();
     }
 
     private void initPool(){

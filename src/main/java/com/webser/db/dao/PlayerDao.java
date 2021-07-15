@@ -1,17 +1,23 @@
 package com.webser.db.dao;
 
 import com.webser.db.MySQLUtil;
+import com.webser.db.PlayerInfo;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
+import io.vertx.core.Promise;
 import io.vertx.core.json.JsonObject;
-import io.vertx.sqlclient.Row;
-import io.vertx.sqlclient.RowSet;
+import io.vertx.sqlclient.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class PlayerDao {
     protected Logger logger = LoggerFactory.getLogger(PlayerDao.class);
@@ -33,15 +39,17 @@ public class PlayerDao {
                 .execute(qRes -> {
                     if(qRes.succeeded()){
                         List<T> lists = new ArrayList<>();
-                        RowSet<Row> vs = qRes.result();
 
-                        if(vs != null && vs.size() > 0){
-                            for(Row row : vs){
-                                String js = row.toString();
+                        RowSet<Row> result = qRes.result();
+                        List<String> col = qRes.result().columnsNames();
 
-                                T entity = new JsonObject(js).mapTo(classes);
-                                lists.add(entity);
+                        for (Row row : result) {
+                            JsonObject json = new JsonObject();
+                            for (String str : col) {
+                                json.put(str,row.getValue(str));
                             }
+                            T entity = new JsonObject(json.toString()).mapTo(classes);
+                            lists.add(entity);
                         }
 
                         handler.handle(Future.succeededFuture(lists));
