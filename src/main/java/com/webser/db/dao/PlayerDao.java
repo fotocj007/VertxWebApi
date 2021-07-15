@@ -1,33 +1,33 @@
 package com.webser.db.dao;
 
 import com.webser.db.MySQLUtil;
-import com.webser.db.PlayerInfo;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
-import io.vertx.core.Promise;
 import io.vertx.core.json.JsonObject;
 import io.vertx.sqlclient.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-
-public class PlayerDao {
+public class PlayerDao extends MysqlDbDao{
     protected Logger logger = LoggerFactory.getLogger(PlayerDao.class);
 
-    protected String DB_SPLIT = "";
-    protected MySQLUtil mySQLPool;
-
     public PlayerDao(String DB_SPLIT, MySQLUtil mySQLPool) {
-        this.DB_SPLIT = DB_SPLIT;
-        this.mySQLPool = mySQLPool;
+        super(DB_SPLIT,mySQLPool);
+
+        loadAllDBInfo();
+    }
+
+    /*************************
+     * 加载需要分库分表的实体类
+     */
+    private void loadAllDBInfo(){
+        List<String> classList = new ArrayList<>();
+        classList.add("com.webser.db.PlayerInfo");
+
+        super.loadAllDBInfo(classList);
     }
 
     /*************************

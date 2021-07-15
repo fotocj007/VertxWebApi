@@ -1,18 +1,32 @@
 package com.webser.db;
 
-public class PlayerInfo {
+import com.webser.annotation.GeneratedValue;
+import com.webser.annotation.Id;
+import com.webser.annotation.Table;
+
+@Table(name = "player_info")
+public class PlayerInfo extends BaseEntity<Long,Long>{
+    @Id
+    @GeneratedValue
     private long id;
 
     private String userName;
 
     private int age;
 
-    public long getId() {
+    @Override
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    @Override
+    public void setId(Long aLong) {
+        id = aLong;
+    }
+
+    @Override
+    public Long splitId() {
+        return id;
     }
 
     public String getUserName() {

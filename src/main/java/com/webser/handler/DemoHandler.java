@@ -20,13 +20,23 @@ public class DemoHandler implements InterHandler {
         System.out.println("上传参数:"+ request.name + "-" + request.age);
 
 
-        String sql = "select * from " + Configure.getInstance().mysqlConfig.configDbName + ".player_info ";
+//        String sql = "select * from " + Configure.getInstance().mysqlConfig.configDbName + ".player_info ";
+//        PlayerDao client = Configure.getInstance().daoManager.getPlayerDao();
+//        client.queryConfigList(sql, PlayerInfo.class, res -> {
+//            List<PlayerInfo> lists = res.result();
+//            for(PlayerInfo item : lists){
+//                System.out.println(item.getUserName() + "---" + item.getAge());
+//            }
+//        });
+
+
+        PlayerInfo info = new PlayerInfo();
+        info.setUserName("kkkkkdd");
+        info.setAge(100);
+
         PlayerDao client = Configure.getInstance().daoManager.getPlayerDao();
-        client.queryConfigList(sql, PlayerInfo.class, res -> {
-            List<PlayerInfo> lists = res.result();
-            for(PlayerInfo item : lists){
-                System.out.println(item.getUserName() + "---" + item.getAge());
-            }
+        client.saveBaseEntity(info,res -> {
+
         });
 
 
