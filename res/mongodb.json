@@ -1,0 +1,6 @@
+{
+  "sources": [
+    {"host": "10.0.201.215", "port": 27017, "db_name": "wsdemo","minPoolSize":5,"maxPoolSize": 10}
+  ],
+  "pools": 4
+}
