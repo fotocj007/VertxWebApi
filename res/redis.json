@@ -1,0 +1,9 @@
+{
+  "sources": [
+    {"connectionString": "redis://:foto_CJ123@10.0.201.215:6379/0", "maxPoolSize":6},
+    {"connectionString": "redis://:foto_CJ123@10.0.201.215:6379/1", "maxPoolSize":6},
+    {"connectionString": "redis://:foto_CJ123@10.0.201.215:6379/2", "maxPoolSize":6},
+    {"connectionString": "redis://:foto_CJ123@10.0.201.215:6379/3", "maxPoolSize":6}
+  ],
+  "poolSize": 8
+}

@@ -4,6 +4,8 @@ import com.webser.db.MySQLUtil;
 import com.webser.db.dao.DaoManager;
 import com.webser.handler.DemoHandler;
 import com.webser.handler.imp.HandlerManager;
+import com.webser.redis.RedisPool;
+import com.webser.redis.RedisUtil;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 
@@ -23,6 +25,10 @@ public class Configure {
     private MySQLUtil mySQLPool;
     public DaoManager daoManager;
 
+    private RedisConfig redisConfig;
+    private RedisPool redisPool;
+    public RedisUtil redisUtil;
+
     public void init(Vertx vertx){
         this.vertx = vertx;
 
@@ -31,6 +37,7 @@ public class Configure {
         loadConfig();
 
         initDb();
+        initRedis();
     }
 
     private void initHandler(){
@@ -42,6 +49,7 @@ public class Configure {
      */
     protected void loadConfig(){
         mysqlConfig = new MysqlConfig(vertx, "res/mysql.json");
+        redisConfig = new RedisConfig(vertx, "res/redis.json");
     }
 
     protected void initDb(){
@@ -52,5 +60,13 @@ public class Configure {
         mySQLPool = new MySQLUtil(vertx,2,list);
 
         daoManager = new DaoManager(mysqlConfig,mySQLPool);
+    }
+
+    /**
+     *  初始化Redis
+     */
+    protected void initRedis(){
+        redisPool = new RedisPool(vertx,redisConfig);
+        redisUtil = new RedisUtil(redisPool);
     }
 }
